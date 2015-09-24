@@ -17,6 +17,12 @@ package edu.worcester.cs.kwurst;
 */
 import java.util.ArrayList;
 
+/**
+ * Represents a student transcript for the purposes of a degree audit.
+ * 
+ * @author Karl R. Wurst
+ * @version CS-443 Fall 2015
+ */
 public class Transcript {
     private double gpa;
     private int currentEarnedCr; // Current earned credits (already completed)
@@ -31,10 +37,7 @@ public class Transcript {
     public static final double REQUIRED_GPA = 2.0;
     
     /**
-     * Creates a new student given a first and last name. An id number is assigned sequentially.
-     * 
-     * @param firstName the student's first name
-     * @param lastName the student's last name
+     * Creates a new student transcript.
      */
     public Transcript() {
 		transcript = new ArrayList<CourseAttempted> ();
