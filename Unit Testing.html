@@ -1,0 +1,518 @@
+<!DOCTYPE html><html>
+
+<head>
+<meta charset="utf-8">
+<title>Unit Testing</title>
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+</head>
+<body>
+<h1 id="toc_0">Unit Testing Part 1</h1>
+
+<h2 id="toc_1">Objectives</h2>
+
+<p>The objective of this lab is to learn how to test code with the unit testing framework JUnit.</p>
+
+<h2 id="toc_2">Background</h2>
+
+<p>The project contains two classes – <code>Student</code> and <code>DegreeAudit</code>. </p>
+
+<p>The <code>Student</code> class represents a student for the purposes of doing a degree audit.</p>
+
+<p>The <code>DegreeAudit</code> class is a driver class that is used to test some aspects of the <code>Student</code> class. It does this by creating some student objects, setting their attributes, and printing the results of calling some of their methods.</p>
+
+<p>You have probably have been using this method of testing your code since you learned to program. It relies on a human to read the output and to compare it to the expected output to determine if the code is working correctly. The problem with this testing method is that the human has to carefully check the output, and needs to do so every time the code is changed, compiled and run. What we would like to have is a more automated way of testing our code.</p>
+
+<p>Unit testing provides a way of automatically testing individual classes and methods in an automated and repeatable way. By writing tests that test the behavior of classes and methods and comparing them automatically to expected values, we can let the computer run through our suite of tests every time we make a change to the code. This way we can be sure that any changes we made did not break some code that was already working. In many large software projects the test suite is run automatically every time a developer pushes new code to repository.</p>
+
+<p>We will be using JUnit, a unit testing framework written specifically for Java. JUnit can be run on its own, or as a plug-in to integrated development environments like Eclipse. JUnit is already built in to Eclipse.</p>
+
+<h2 id="toc_3">Procedure</h2>
+
+<ol>
+<li><strong>Fork the Unit Testing Part 1 Repository</strong>
+
+<ol>
+<li> Go to the unit-testing1 repository at <a href="">https://github.com/kwurst/unit-testing1</a></li>
+<li> Fork the unit-testing1 repository to your account.</li>
+<li> Add your instructor and partner(s) as collaborators.</li>
+</ol></li>
+<li><strong>Download (clone) the unit-testing1 Repository and Import it into Eclipse</strong>
+
+<ol>
+<li> Copy the <em>Clone URI</em> from GitHub.</li>
+<li> Clone the repository onto your computer.</li>
+<li> In Eclipse, choose <em>File:Import</em>.</li>
+<li> Choose <em>General:Existing Projects into Workspace</em>.</li>
+<li> Browse to select the root directory of the repository.</li>
+<li> Click <em>Finish</em>.</li>
+</ol></li>
+<li><p><strong>Read and Understand the unit-testing1 Code</strong></p>
+
+<ol>
+<li> Read both the code, and the documentation for both classes, and be sure you understand what the code is supposed to do, and how it works. </li>
+<li> Run the main method to be sure you understand what it is doing, and what the code is testing.</li>
+</ol>
+
+<p><strong><em>If you do not understand any part of the code, ask the instructor.</em></strong> In the next step you will be writing tests to be sure that the code is correct, and that continues to work correctly as we modify it.</p></li>
+<li><p><strong>Create a <code>StudentTest</code> Class</strong></p>
+
+<ol>
+<li> Right-click on the project, and choose <em>New:Source Folder</em>.</li>
+<li> Name the new folder <code>test</code>.</li>
+<li> Right-click on Student class, and choose <em>New:JUnit Test Case</em>. </li>
+<li> Set the source folder to be the <code>test</code> folder you just created.</li>
+<li> Check the box to create a <code>setUp()</code> method.</li>
+<li> Click <em>Next</em>.</li>
+<li> Check the box to create a test method for <code>getCurrentEarnedCr()</code>.</li>
+<li> Click <em>Finish</em>.</li>
+<li> Allow Eclipse to add JUnit 4 to the build path.</li>
+<li>The <code>StudentTest</code> class will open in the editor.</li>
+</ol></li>
+<li><p><strong>Write a Test Method</strong>
+<br>Our first test will be a simple one to determine if our code for storing the Student&rsquo;s Current Earned Credits works correctly. Modify the <code>testGetCurrentEarnedCr()</code> method to look like:
+<code>java
+@Test
+public void testCurrentEarnedCr() {
+    Student student1 = new Student(&quot;Jane&quot;, &quot;Smith&quot;);
+    int credits = 45;
+    student1.setCurrentEarnedCr(credits);
+    assertEquals(credits, student1.getCurrentEarnedCr());
+}
+</code></p>
+
+<ul>
+<li>The first line (<code>@Test</code> annotation) tells JUnit that this will be a test method.</li>
+<li>The second line is simply the header for the test method. The name of the method does not have to have the word &ldquo;test&rdquo; in it, but it is standard to do so.<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup> </li>
+<li>The third line creates the <code>Student</code> object needed for the test.</li>
+<li>The fourth and fifth lines set the Student&rsquo;s Current Earned Credits to some value. This is being done on two lines, and with a variable for the credits value, so that we can use the value of the variable on the next line.</li>
+<li>The sixth line compares the value of the credits variable that we used with the value returned by the <code>getCurrentEarnedCr()</code> method to see if they are equal. The <code>assertEquals</code> method is part of the JUnit framework.</li>
+</ul></li>
+<li><p><strong>Run the Test Method</strong></p>
+
+<ol>
+<li> Save your code.</li>
+<li> Right-click on <code>StudentTest.java</code> and choose <em>Run as:JUnit Test</em>.</li>
+<li> A new window should appear that looks like:<br>
+<img src="passingtest.png" alt="Passing Test"></li>
+<li> The green bar indicates that the test was successful.</li>
+</ol></li>
+<li><p><strong>Modify the Test Method to Make It Fail</strong>
+<br>Just to see what a failing test looks like, lets modify our test class so that the it does not pass:</p>
+
+<ol>
+<li> Change the last line of the <code>testCurrentEarnedCr()</code> method, so that it looks like this:</li>
+</ol>
+
+<pre><code class="language-java">    assertEquals(40, student1.getCurrentEarnedCr());</code></pre>
+
+<ol>
+<li> Compile your code and run the test again. You should get a red bar this time, indicating that the test has failed.</li>
+<li> The failing test will have an <strong>X</strong> on its icon in the upper part of the window. This is how you will know which test has failed when you have multiple tests in your test suite.</li>
+<li> Select the test line with the <strong>X</strong> on it, and an explanation of why the test failed will be displayed in the lower portion of the window. You can even double-click on the line below that includes the name of the test method to take you directly to the method&rsquo;s code.</li>
+<li> Go back and return your test method to it&rsquo;s working state, and run your test again.</li>
+</ol></li>
+<li><p><strong>Write and Run a Test Method for Anticipated Additional Credits</strong>
+<br>Follow the steps in parts 6 and 7 to create and run test method for Anticipated Additional Credits. You do not need to modify the test to make it fail.
+<br><br>Notice that you all of your tests are run every time, and notice how easy to see that all of the tests passed – you do not need to scan through all of the output and compare values yourself.</p></li>
+<li><p><strong>Use the setUp() Method</strong>
+<br>Notice that for each of your tests, you needed to create a student object as the first step. Since this needs to be done for every test method, it would be nice to have this done automatically before each test. This is what the <code>setUp()</code> method is for. The <code>@Before</code> annotation tells JUnit to execute this method before every <code>@Test</code> method.<sup id="fnref2"><a href="#fn2" rel="footnote">2</a></sup></p>
+
+<ol>
+<li>Declare an instance variable for a <code>Student</code> object at the top of the class:</li>
+</ol>
+
+<pre><code class="language-java">private Student student1;</code></pre>
+
+<ol>
+<li>Move the line that creates the <code>Student</code> object to the <code>setUp()</code> method:</li>
+</ol>
+
+<pre><code class="language-java">@Before
+public void setUp()
+{
+    student1 = new Student(&quot;Jane&quot;, &quot;Smith&quot;);
+}</code></pre>
+
+<ol>
+<li>Delete the line that creates the <code>Student</code> from each of your test methods.</li>
+<li>Run your tests again.</li>
+</ol></li>
+<li><p><strong>Test Method for <code>readyToGraduate()</code></strong>
+<br>Let&rsquo;s write at test for a more difficult to test method – <code>readyToGraduate()</code>. For a student to be ready to graduate they must meet 4 criteria [^3]:</p>
+
+<ol>
+<li> Completed 120 credits.</li>
+<li> GPA of 2.0 or higher.</li>
+<li> Completed LASC requirements.</li>
+<li> Complete major requirements.</li>
+</ol>
+
+<p>So, to test the readyToGraduate() method, we need to set 4 different values first – and we are testing a Boolean return value.</p>
+
+<ol>
+<li>Create at new test method called testReadyToGraduate1(). We will have more than one test for this method, so we are adding a number at the end of the method name:<br>
+<code>java
+@Test
+public void testReadyToGraduate1()
+{
+    student1.setCurrentEarnedCr(120);
+    student1.setGpa(2.0);
+    student1.setMajorComplete(true);
+    student1.setLascComplete(true);
+    assertTrue(student1.readyToGraduate());
+}
+</code></li>
+<li> For this method we are testing for a student who is ready to graduate, so we are setting all 4 criteria to make that true.</li>
+<li> Notice that on the last line, we are using a different assert method – assertTrue. We could have used assertEquals and just set the first parameter to true, but since this is a common thing to test, JUnit provides an assertTrue and an assertFalse method.</li>
+<li> Run your tests again.</li>
+</ol></li>
+<li><p><strong>Tests for Not readyToGraduate()</strong>
+<br>Write 4 more testReadyToGraduate() methods that will to test that the student is not ready to graduate. Have the Student in each of these tests not meet one of the 4 criteria.</p>
+
+<ol>
+<li> Don&rsquo;t forget to give each test methods a different name.</li>
+<li> Don&rsquo;t forget to change the last line in each to use the assertFalse method.<sup id="fnref3"><a href="#fn3" rel="footnote">3</a></sup></li>
+<li> Run your tests again.</li>
+</ol></li>
+<li><p><strong>One More Test for readyToGraduate()</strong>
+<br>Let&rsquo;s make one more test for readyToGraduate() that should pass. Let&rsquo;s test the case where the student has met all 4 criteria, but has met the Current Earned Credits criteria by completing more than 120 credits:</p>
+
+<ol>
+<li> Copy the testReadyToGraduate1() method.</li>
+<li> Edit the first line of the body so that the student has completed more than 120 credits.</li>
+<li> Run your tests again.</li>
+<li> The test failed! What happened? Go find the error.</li>
+</ol></li>
+<li><p><strong>What Other Tests Can You Think Of?</strong>
+<br>There should be at least one test for each method - probably more. We&rsquo;ll share the tests you came up with as a class, and see how well we think we did at covering the code.</p></li>
+<li><p><strong>Commit Your Working Program</strong></p></li>
+<li><p><strong>Push Your Program to GitHub and Clone Onto Your Partner&rsquo;s Computer</strong></p></li>
+</ol>
+
+<h2 id="toc_4">Copyright and License</h2>
+
+<h4 id="toc_5">&copy; 2015 Karl R. Wurst, Worcester State University</h4>
+
+<p><img src="http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png" width=100px/>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit <a href="">http://creativecommons.org/licenses/by-sa/4.0/</a> or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.</p>
+
+<div class="footnotes">
+<hr>
+<ol>
+
+<li id="fn1">
+<p>In JUnit 3, including &ldquo;test&rdquo; in the name of the method was required to make a method a test method. JUnit 4 added the <code>@Test</code> annotation to do this, so it is no longer necessary to include the word &ldquo;test&rdquo; in the method name.&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn2">
+<p>In JUnit 3, the method was required to be called <code>setUp()</code> to make this method be called before every test method. JUnit 4 added the <code>@Before</code> annotation to do this, so it is no longer necessary to call the method <code>setUp()</code>. You can even have multiple <code>@Before</code> methods, but there is no guarantee that they will run in any particular order.&nbsp;<a href="#fnref2" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn3">
+<p>These are still passing tests. We are just testing for a negative condition – that readyToGraduate() returns false.&nbsp;<a href="#fnref3" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+
+</body>
+
+</html>
