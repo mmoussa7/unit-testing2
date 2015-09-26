@@ -1,7 +1,7 @@
 package edu.worcester.cs.kwurst;
 
 /* 
- * Copyright (C) 2013 Karl R. Wurst, Aparna Mahadev
+ * Copyright (C) 2013, 2015 Karl R. Wurst, Aparna Mahadev
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ package edu.worcester.cs.kwurst;
  * 
  * @author Karl R. Wurst
  * @author Aparna Mahadev
- * @version Lab 10
+ * @version CS-443 Fall 2015
  */
 public class Course {
 

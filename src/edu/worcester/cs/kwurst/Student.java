@@ -21,7 +21,7 @@ package edu.worcester.cs.kwurst;
  * Represents a student record for the purposes of a degree audit.
  * 
  * @author Karl R. Wurst
- * @version JUnit Lab
+ * @version CS-443 Fall 2015
  */
 public class Student
 {
