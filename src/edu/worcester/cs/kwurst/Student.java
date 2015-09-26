@@ -206,6 +206,14 @@ public class Student
 		transcript.addCourse(c, semester, year, grade);
 	}
 
+	public boolean dropCourse(Course c, String semester, int year) {
+		return transcript.dropCourse(c, semester, year);
+	}
+	
+	public boolean changeGrade(Course c, String semester, int year, Grade grade) {
+		return transcript.changeGrade(c, semester, year, grade);
+	}
+	
 	/**
     * Returns the list of courses as a String.
     * 

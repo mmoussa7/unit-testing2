@@ -156,7 +156,6 @@ public class Transcript {
 	 * 
 	 * @param courseToAdd the course to add
 	 */
-
 	public void addCourse(Course c, String semester, int year, Grade grade) {
 	    CourseAttempted courseToAdd = new CourseAttempted(c, semester, year, grade);
 	    transcript.add(courseToAdd);
@@ -183,6 +182,22 @@ public class Transcript {
 			if (courseToAdd.grade.getNumericGrade() > 0) 
 			   currentEarnedCr += courseToAdd.course.getCredits();
 	    }
+	}
+	
+	public boolean dropCourse(Course c, String semester, int year) {
+	    CourseAttempted courseToDrop = new CourseAttempted(c, semester, year, new Grade("IP"));
+	    return transcript.remove(courseToDrop);
+	}
+	
+	public boolean changeGrade(Course c, String semester, int year, Grade grade) {
+	    CourseAttempted courseToChange = new CourseAttempted(c, semester, year, new Grade("IP"));
+		int index = transcript.indexOf(courseToChange);
+		if (index > 0) {
+			courseToChange.grade = grade;
+			transcript.set(index, courseToChange);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -225,35 +240,83 @@ public class Transcript {
      * instance variable course of the inner class is accessed directly by the outer class (in
      * this case Student).
      */
-    private class CourseAttempted  {
-       private Course course;
-       private String semester; // Fall, Spring, Summer I, Summer II, Intersession
-       private int year;
-       private Grade grade;
-      
-       /**
-        * Constructor for objects of class CourseAttempted
-        * @param c The course that was attempted by the student
-        * @param semester Semester in which the course was taken
-        * @param year Year in which the course was taken
-        * @param grade Grade the student received for this course
-        */
-       public CourseAttempted(Course c, String semester, int year, Grade grade)   {
-          this.course = c;
-          this.semester = semester;
-          this.year = year;
-          this.grade = grade;
-       }
+	private class CourseAttempted  {
 
-       /** 
-         * Returns a String representation of a course attempted
-        */
-       public String toString() {
-           String s = course.toString();
-           s += "\t" + semester + year;
-           s += "\t" + grade;
-           return s;
-       } 
-    } 
+		private Course course;
+		private String semester; // Fall, Spring, Summer I, Summer II, Intersession
+		private int year;
+		private Grade grade;
+
+		/**
+		 * Constructor for objects of class CourseAttempted
+		 * @param c The course that was attempted by the student
+		 * @param semester Semester in which the course was taken
+		 * @param year Year in which the course was taken
+		 * @param grade Grade the student received for this course
+		 */
+		public CourseAttempted(Course c, String semester, int year, Grade grade)   {
+			this.course = c;
+			this.semester = semester;
+			this.year = year;
+			this.grade = grade;
+		}
+
+		/** 
+		 * Returns a String representation of a course attempted
+		 */
+		public String toString() {
+			String s = course.toString();
+			s += "\t" + semester + year;
+			s += "\t" + grade;
+			return s;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + ((course == null) ? 0 : course.hashCode());
+			result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+			result = prime * result + ((semester == null) ? 0 : semester.hashCode());
+			result = prime * result + year;
+			return result;
+		}
+
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CourseAttempted other = (CourseAttempted) obj;
+			if (course == null) {
+				if (other.course != null)
+					return false;
+			} else if (!course.equals(other.course))
+				return false;
+			if (grade == null) {
+				if (other.grade != null)
+					return false;
+			} else if (!grade.equals(other.grade))
+				return false;
+			if (semester == null) {
+				if (other.semester != null)
+					return false;
+			} else if (!semester.equals(other.semester))
+				return false;
+			if (year != other.year)
+				return false;
+			return true;
+		}
+	}
+
+	public Transcript getOuterType() {
+		return Transcript.this;
+	} 
 	
 }
