@@ -30,6 +30,8 @@ public class Transcript {
     private boolean lascComplete; // Has the student completed LASC requirements
     private boolean majorComplete; //Has the student completed requirements for the major
 	private ArrayList<CourseAttempted> transcript;
+	
+	public enum Semester { FALL, INTERSESSION, SPRING, SUMMER1, SUMMER2 };
 
     // Minimum number of credits required to graduate
     public static final int REQUIRED_CR = 120;
@@ -156,7 +158,7 @@ public class Transcript {
 	 * 
 	 * @param courseToAdd the course to add
 	 */
-	public void addCourse(Course c, String semester, int year, Grade grade) {
+	public void addCourse(Course c, Semester semester, int year, Grade grade) {
 	    CourseAttempted courseToAdd = new CourseAttempted(c, semester, year, grade);
 	    transcript.add(courseToAdd);
 
@@ -184,12 +186,12 @@ public class Transcript {
 	    }
 	}
 	
-	public boolean dropCourse(Course c, String semester, int year) {
+	public boolean dropCourse(Course c, Semester semester, int year) {
 	    CourseAttempted courseToDrop = new CourseAttempted(c, semester, year, new Grade("IP"));
 	    return transcript.remove(courseToDrop);
 	}
 	
-	public boolean changeGrade(Course c, String semester, int year, Grade grade) {
+	public boolean changeGrade(Course c, Semester semester, int year, Grade grade) {
 	    CourseAttempted courseToChange = new CourseAttempted(c, semester, year, new Grade("IP"));
 		int index = transcript.indexOf(courseToChange);
 		if (index > 0) {
@@ -243,7 +245,7 @@ public class Transcript {
 	private class CourseAttempted  {
 
 		private Course course;
-		private String semester; // Fall, Spring, Summer I, Summer II, Intersession
+		private Semester semester;
 		private int year;
 		private Grade grade;
 
@@ -254,7 +256,7 @@ public class Transcript {
 		 * @param year Year in which the course was taken
 		 * @param grade Grade the student received for this course
 		 */
-		public CourseAttempted(Course c, String semester, int year, Grade grade)   {
+		public CourseAttempted(Course c, Semester semester, int year, Grade grade)   {
 			this.course = c;
 			this.semester = semester;
 			this.year = year;

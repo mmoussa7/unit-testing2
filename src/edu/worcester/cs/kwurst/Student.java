@@ -202,15 +202,15 @@ public class Student
 	 * @param courseToAdd the course to add
 	 */
 
-	public void addCourse(Course c, String semester, int year, Grade grade) {
+	public void addCourse(Course c, Transcript.Semester semester, int year, Grade grade) {
 		transcript.addCourse(c, semester, year, grade);
 	}
 
-	public boolean dropCourse(Course c, String semester, int year) {
+	public boolean dropCourse(Course c, Transcript.Semester semester, int year) {
 		return transcript.dropCourse(c, semester, year);
 	}
 	
-	public boolean changeGrade(Course c, String semester, int year, Grade grade) {
+	public boolean changeGrade(Course c, Transcript.Semester semester, int year, Grade grade) {
 		return transcript.changeGrade(c, semester, year, grade);
 	}
 	
