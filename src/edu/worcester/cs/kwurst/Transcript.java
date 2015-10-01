@@ -191,11 +191,11 @@ public class Transcript {
 	    return transcript.remove(courseToDrop);
 	}
 	
-	public boolean changeGrade(Course c, Semester semester, int year, Grade grade) {
-	    CourseAttempted courseToChange = new CourseAttempted(c, semester, year, new Grade("IP"));
+	public boolean changeGrade(Course c, Semester semester, int year, Grade grade, Grade newGrade) {
+	    CourseAttempted courseToChange = new CourseAttempted(c, semester, year, grade);
 		int index = transcript.indexOf(courseToChange);
 		if (index > 0) {
-			courseToChange.grade = grade;
+			courseToChange.grade = newGrade;
 			transcript.set(index, courseToChange);
 			return true;
 		}
