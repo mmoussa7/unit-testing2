@@ -37,7 +37,7 @@ import java.util.HashMap;
  * E	0.0
  * IP	0.0		In Progress
  * 
- * @author Karl R. WUrst 
+ * @author Karl R. Wurst 
  * @version CS-443 Fall 2015
  */
 public class Grade
