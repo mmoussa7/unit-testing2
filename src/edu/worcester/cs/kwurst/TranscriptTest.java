@@ -29,12 +29,6 @@ public class TranscriptTest {
 				new Course("CS", 348, "Software Process Management", 3), 
 				Transcript.Semester.FALL, 2015, new Grade("IP"));
 		assertEquals(3.0, t1.getGpa(), 0.0);	
-	}
-	
-	@Test
-	public void testCourseAttemptedEqual() {
-		CourseAttempted c1 = new CourseAttempted(new Course("CS", 348, "Software Process Management", 3), 
-				Transcript.Semester.FALL, 2015, new Grade("IP"));
-	}
+	}  
 
 }

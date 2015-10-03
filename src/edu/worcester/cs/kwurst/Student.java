@@ -210,8 +210,8 @@ public class Student
 		return transcript.dropCourse(c, semester, year);
 	}
 	
-	public boolean changeGrade(Course c, Transcript.Semester semester, int year, Grade grade) {
-		return transcript.changeGrade(c, semester, year, grade);
+	public boolean changeGrade(Course c, Transcript.Semester semester, int year, Grade grade, Grade newGrade) {
+		return transcript.changeGrade(c, semester, year, grade, newGrade);
 	}
 	
 	/**
