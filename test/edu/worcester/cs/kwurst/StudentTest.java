@@ -2,14 +2,19 @@ package edu.worcester.cs.kwurst;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.worcester.cs.kwurst.Transcript.Semester;
 
 public class StudentTest {
 
 	private Student student1;
-
+	private static final Course course1 = new Course("CS", 443, "Software Quality Assurance and Testing", 3);
+	private static final Course course2 = new Course("AR", 130, "Painting I", 3);
+	private static final Course course3 = new Course("UR", 230, "Technology, Public Policy, and Urban Society", 3);
+	private static final Course course4 = new Course("EN", 252, "Technical Writing", 3);
+	
 	@Before
 	public void setUp() throws Exception {
 		student1 = new Student("Jane", "Smith");
@@ -73,7 +78,6 @@ public class StudentTest {
 
 	@Test
 	public void testLascComplete() {
-
 		boolean lascComplete = false;
 		student1.setLascComplete(lascComplete);
 		assertEquals(lascComplete, student1.getLascComplete());
@@ -93,10 +97,31 @@ public class StudentTest {
 		student1.setMajorComplete(majorComplete);
 		assertEquals(majorComplete, student1.getMajorComplete());
 	}
-
-	@After
-	public void tearDown() {
-		student1 = null;
+	
+	@Test
+	public void testGpaNoCourses() {
+		assertEquals(0.0, student1.getGpa(), 0.0);
 	}
+	
+	@Test
+	public void testGpaSingleCourse() {
+		student1.addCourse(course1, Semester.FALL, 2015, Grade.A);
+		assertEquals(4.0, student1.getGpa(), 0.0);
+	}
+	
+	@Test
+	public void testGpaMultipleCourses() {
+		student1.addCourse(course1, Semester.FALL, 2015, Grade.A);
+		student1.addCourse(course2, Semester.FALL, 2015, Grade.A_MINUS);
+		assertEquals(3.85, student1.getGpa(), 0.01);
+	}
+	
+	@Test
+	public void testGpaInProgressCourses() {
+		student1.addCourse(course1, Semester.FALL, 2015, Grade.IN_PROGRESS);
+		student1.addCourse(course2, Semester.FALL, 2015, Grade.A);
+		assertEquals("In progress courses do not affect GPA", 4.0, student1.getGpa(), 0);
+	}
+	
 
 }

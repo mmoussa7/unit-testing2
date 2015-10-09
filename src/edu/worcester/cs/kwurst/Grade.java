@@ -18,77 +18,53 @@ package edu.worcester.cs.kwurst;
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-import java.util.HashMap;
 
 /**
- * Represents a course grade.
+ * Represents a course grade with letter and numeric equivalents. A 4.0 A- 3.7 B+ 3.3 B 3.0 B- 2.7 C+ 2.3 C 2.0 C- 1.7
+ * D+ 1.3 D 1.0 D- 0.7 E 0.0 IP 0.0 In Progress
  * 
- * @author Karl R. WUrst 
- * @version Summer I 2015
+ * @author Karl R. WUrst
+ * @version CS-443 Fall 2015
  */
-public class Grade
-{
-    /*
-     * Builds a table of letter grades and their numeric equivalents.
-     * This uses the Java HashMap http://docs.oracle.com/javase/7/docs/api/java/util/HashMap.html
-     */
-    private static HashMap<String,Double> gradeTable = new HashMap<String,Double>();
-    
-    static {
-        gradeTable.put("A",  4.0);
-        gradeTable.put("A-", 3.7);
-        gradeTable.put("B+", 3.3);
-        gradeTable.put("B",  3.0);
-        gradeTable.put("B-", 2.7);
-        gradeTable.put("C+", 2.3);
-        gradeTable.put("C",  2.0);
-        gradeTable.put("C-", 1.7);
-        gradeTable.put("D+", 1.3);
-        gradeTable.put("D",  1.0);
-        gradeTable.put("D-", 0.7);
-        gradeTable.put("E",  0.0);
-        gradeTable.put("IP", 0.0); // In Progress
-    }
+public enum Grade {
 
-    private String grade;
-    
-    /**
-     * Create a Grade from a letter grade.
-     * 
-     * @param letterGrade the letter grade (A, A-, B+, B, B-, C+, C, C-, D+, D, D-, E, IP).
-     * @throws IllegalArgumentException
-     */
-    public Grade(String letterGrade) {
-        if (!gradeTable.containsKey(letterGrade)) {
-            throw new IllegalArgumentException(letterGrade + " is not a valid letter grade.");
-        }
-        grade = letterGrade;
-    }
-    
-    /**
-     * Returns the letter grade (A, A-, B+, B, B-, C+, C, C-, D+, D, D-, E, IP).
-     * 
-     * @return the letter grade (A, A-, B+, B, B-, C+, C, C-, D+, D, D-, E, IP).
-     */
-    public String getLetterGrade() {
-        return grade;
-    }
+	A("A", 4.0),
+	A_MINUS("A-", 3.7),
+	B_PLUS("B+", 3.3),
+	B("B", 3.0),
+	B_MINUS("B-", 2.7),
+	C_PLUS("C+", 2.3),
+	C("C", 2.0),
+	C_MINUS("C-", 1.7),
+	D_PLUS("D+", 1.3),
+	D("D", 1.0),
+	D_MINUS("D-", 0.7),
+	F("F", 0.0),
+	INCOMPLETE("IC", 0.0),
+	IN_PROGRESS("IP", 0.0),
+	WITHDRAW("W", 0.0);
 
-    /**
-     * Returns the numeric grade (4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7, 1.3, 1.0, 0.0, 0.0).
-     * 
-     * @return the numeric grade (4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7, 1.3, 1.0, 0.0, 0.0).
-     */
-    public double getNumericGrade() {
-        return gradeTable.get(grade);
-    }
+	private final String grade;
+	private final double value;
 
-    /**
-     * Returns a printable representation of a Grade
-     *
-     * @return a printable representation of a Grade
-     */
-    public String toString()  {
-        return grade;
-    }
+	private Grade(String grade, double value) {
+		this.grade = grade;
+		this.value = value;
+	}
+
+	public double getNumericGrade() {
+		return this.value;
+	}
+
+	public String getLetterGrade() {
+		return this.grade;
+	}
+	
+	public boolean isInProgress() {
+		return this == IN_PROGRESS;
+	}
+	
+	public boolean isPassingGrade() {
+		return this.getNumericGrade() >= C.getNumericGrade();
+	}
 }
